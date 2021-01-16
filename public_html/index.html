@@ -1,0 +1,47 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Mast Selector</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/ums.css">
+
+    <script src="js/ums.js"></script>
+  </head>
+  <body>
+    <table id="ums-mast-selector">
+      <tbody>
+        <tr>
+          <td class="ums-label">
+            <label>Producer:</label>
+          </td>
+          <td class="ums-select">
+            <select id="ums-producer-select" onchange="mastSelector.onChange()">
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="ums-label">
+            <label>Year:</label>
+          </td>
+          <td class="ums-select">
+            <select id="ums-year-select" onchange="mastSelector.onChange()">
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="ums-profile">
+            <div class="ums-profile" id="ums-cc">Constant Curve</div>
+            <div class="ums-profile" id="ums-cc-fl">Constant FL Curve</div>
+            <div class="ums-profile" id="ums-cc-fh">Constant FH Curve</div>
+            <div class="ums-profile" id="ums-unknown">Unknown</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
