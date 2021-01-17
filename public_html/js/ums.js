@@ -32,21 +32,12 @@ class MastProfile {
     static ConstantFhCurve = new MastProfile("cc-fh");
     static Unknown = new MastProfile("unknown");
 
-    static profiles = [
+    static all = [
         MastProfile.ConstantCurve,
         MastProfile.ConstantFlCurve,
         MastProfile.ConstantFhCurve,
         MastProfile.Unknown
-    ].reduce(function(all,profile) {
-            all[profile.id] = profile;
-            return all;
-        },
-        {}
-    );
-
-    static getAll() {
-        return Object.values(MastProfile.profiles);
-    }
+    ];
 }
 
 const MastData = {
@@ -102,7 +93,7 @@ const MastData = {
 class ProfileView {
 
     constructor(selector) {
-        this.elements = MastProfile.getAll().reduce(
+        this.elements = MastProfile.all.reduce(
             function(map, profile) {
                 map[profile.id] = ProfileView.getProfileElement(profile);
                 return map;
