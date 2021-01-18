@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const del = require('del');
-const uglify = require('gulp-uglify');
+const terser = require('gulp-terser');
 const cleanCss = require('gulp-clean-css');
 const ghp = require('gulp-gh-pages');
 
@@ -15,7 +15,7 @@ function ghPages() {
 
 function compressJs() {
   return gulp.src('src/*.js')
-    .pipe(uglify())
+    .pipe(terser())
     .pipe(gulp.dest('build/'));
 }
 
@@ -39,4 +39,4 @@ exports.package = gulp.parallel(compressJs,compressCss,copyHtml);
 exports.copy = copy;
 exports.clean = clean;
 exports.clean = clean;
-exports.deploy = gulp.series(clean,copy,ghPages);
+exports.deploy = gulp.series(clean,exports.package,ghPages);
