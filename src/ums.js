@@ -208,7 +208,3 @@ class MastSelector {
         this.profileView.show(profile);
     }
 };
-
-window.onload = function() {
-    MastSelector.build("ums-mast-selector");
-};
