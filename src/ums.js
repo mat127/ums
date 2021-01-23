@@ -23,14 +23,15 @@ class MastDataBuilder {
 
 class MastProfile {
 
-    constructor(id) {
+    constructor(id,name) {
         this.id = id;
+        this.name = name;
     }
 
-    static ConstantCurve = new MastProfile("cc");
-    static ConstantFlCurve = new MastProfile("cc-fl");
-    static ConstantFhCurve = new MastProfile("cc-fh");
-    static Unknown = new MastProfile("unknown");
+    static ConstantCurve = new MastProfile("cc", "Constant Curve");
+    static ConstantFlCurve = new MastProfile("cc-fl", "Constant FL Curve");
+    static ConstantFhCurve = new MastProfile("cc-fh", "Constant FH Curve");
+    static Unknown = new MastProfile("unknown", "Unknown");
 
     static all = [
         MastProfile.ConstantCurve,
@@ -92,27 +93,19 @@ const MastData = {
 
 class ProfileView {
 
-    constructor(selector) {
-        this.elements = MastProfile.all.reduce(
-            function(map, profile) {
-                map[profile.id] = ProfileView.getProfileElement(profile);
-                return map;
-            },
-            {}
-        );
-    }
-
-    static getProfileElement(profile) {
-        const id = "ums-" + profile.id;
-        return document.getElementById(id);
+    constructor(parent) {
+        this.output = parent.getElementsByTagName("output")[0];
     }
 
     show(profile) {
         if(!profile)
             profile = MastProfile.Unknown;
-        for(const [id, element] of Object.entries(this.elements)) {
-            element.style.display = id === profile.id ? "block" : "none";
-        }
+        this.output.innerHTML = profile.name;
+        this.output.className = ProfileView.getClassName(profile);
+    }
+
+    static getClassName(profile) {
+        return "ums-profile ums-" + profile.id;
     }
 }
 
@@ -141,9 +134,10 @@ class SelectorBuilder {
 
 class SelectorModel {
 
-    constructor() {
-        this.producerSelect = document.getElementById("ums-producer-select");
-        this.yearSelect = document.getElementById("ums-year-select");
+    constructor(parent) {
+        let select = parent.getElementsByTagName("select");
+        this.producerSelect = select[0];
+        this.yearSelect = select[1];
     }
 
     getSelectedProducer() {
@@ -163,13 +157,50 @@ class SelectorModel {
 
 class MastSelector {
 
-    constructor() {
-        this.model = new SelectorModel();
+    constructor(parent) {
+        this.model = new SelectorModel(parent);
+        this.setupForm();
+        this.profileView = new ProfileView(parent);
+    }
+
+    setupForm() {
+        const onChange = () => this.onChange();
         new SelectorBuilder(this.model.producerSelect)
             .appendAll(MastData.getAllProducers());
+        this.model.producerSelect.onchange = onChange;
         new SelectorBuilder(this.model.yearSelect)
             .appendYears(2011, 2021);
-        this.profileView = new ProfileView();
+        this.model.yearSelect.onchange = onChange;
+    }
+
+    static build(parentId) {
+        const form = MastSelector.buildForm(parentId);
+        if(!form)
+            return;
+        const selector = new MastSelector(form);
+        selector.onChange();
+        return selector;
+    }
+
+    static buildForm(parentId) {
+        const parent = document.getElementById(parentId);
+        if(!parent) {
+            console.log("parent having id: " + parentId + " not found.");
+            return;
+        }
+        parent.innerHTML = `
+          <form>
+            <label for="producer" class="ums-label">Producer:</label>
+            <select name="producer" id="producer" class="ums-select">
+            </select>
+            <label for="year" class="ums-label">Year:</label>
+            <select name="year" id="year" class="ums-select">
+            </select>
+            <label for="profile" class="ums-label">Profile:</label>
+            <output name="profile" id="profile" class="ums-profile ums-unknown">Unknown</output>
+          </form>
+        `;
+        return parent.getElementsByTagName("form")[0];
     }
 
     onChange() {
@@ -178,9 +209,6 @@ class MastSelector {
     }
 };
 
-var mastSelector;
-
 window.onload = function() {
-    mastSelector = new MastSelector();
-    mastSelector.onChange();
+    MastSelector.build("ums-mast-selector");
 };

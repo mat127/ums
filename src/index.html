@@ -6,41 +6,17 @@
     <title>Mast Selector</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="stylesheet" href="./ums.css">
-
-    <script src="./ums.js"></script>
+    <script src="./ums.js" ></script>
+    <style>
+      #ums-mast-selector {
+        font-family: sans-serif;
+        display: inline-block;
+        margin: 2em;
+      }
+    </style>
   </head>
   <body>
-    <table id="ums-mast-selector">
-      <tbody>
-        <tr>
-          <td class="ums-label">
-            <label>Producer:</label>
-          </td>
-          <td class="ums-select">
-            <select id="ums-producer-select" onchange="mastSelector.onChange()">
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td class="ums-label">
-            <label>Year:</label>
-          </td>
-          <td class="ums-select">
-            <select id="ums-year-select" onchange="mastSelector.onChange()">
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" class="ums-profile">
-            <div class="ums-profile" id="ums-cc">Constant Curve</div>
-            <div class="ums-profile" id="ums-cc-fl">Constant FL Curve</div>
-            <div class="ums-profile" id="ums-cc-fh">Constant FH Curve</div>
-            <div class="ums-profile" id="ums-unknown">Unknown</div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div id="ums-mast-selector"></div>
   </body>
 </html>
