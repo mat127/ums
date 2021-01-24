@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Mast Selector</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./ums.css">
+    <script src="./ums.js" ></script>
+    <script>window.onload = function() { MastSelector.build("ums-mast-selector"); };</script>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      #ums-mast-selector {
+        display: inline-block;
+        border-style: solid;
+        border-width: medium;
+        border-color: black;
+        border-radius: 0.5em;
+        margin: 1.3em;
+        padding: 0.7em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Unifiber Mast Selector</h1>
+    <p>A web page component giving advice which 
+      <a href="https://unifiber.net/windsurf-masts/bend-curves">Unifiber mast bend curve</a> fits
+      particular sail produced by a selected producer in a selected year.
+    </p>
+    <div id="ums-mast-selector"></div>
+    <p>For a detailed instructions how to integrate the selector into a web page read
+      <a href="https://github.com/mat127/ums/wiki/How-to-integrate-the-selector-into-a-web-page">this</a>.
+    </p>
+  </body>
+</html>
