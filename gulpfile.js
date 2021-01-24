@@ -2,41 +2,30 @@ const gulp = require('gulp');
 const del = require('del');
 const terser = require('gulp-terser');
 const cleanCss = require('gulp-clean-css');
-const ghp = require('gulp-gh-pages');
+
+const SRC_DIR = "src";
+const PACKAGE_DIR = "docs";
 
 function clean() {
- return del('build/**', {force:true});
-}
-
-function ghPages() {
-  return gulp.src('build/**/*')
-    .pipe(ghp());
+ return del(PACKAGE_DIR + "/**", {force:true});
 }
 
 function compressJs() {
-  return gulp.src('src/*.js')
+  return gulp.src(SRC_DIR + '/*.js')
     .pipe(terser())
-    .pipe(gulp.dest('build/'));
+    .pipe(gulp.dest(PACKAGE_DIR + '/'));
 }
 
 function compressCss() {
-    return gulp.src('src/*.css')
+    return gulp.src(SRC_DIR + '/*.css')
         .pipe(cleanCss())
-        .pipe(gulp.dest('build/'));
+    .pipe(gulp.dest(PACKAGE_DIR + '/'));
 }
 
 function copyHtml() {
-    return gulp.src('src/*.html')
-        .pipe(gulp.dest('build/'));
-}
-
-function copy() {
-    return gulp.src(['src/*.html','src/*.js','src/*.css'])
-        .pipe(gulp.dest('build/'));
+    return gulp.src(SRC_DIR + '/**/*.html')
+    .pipe(gulp.dest(PACKAGE_DIR + '/'));
 }
 
 exports.package = gulp.parallel(compressJs,compressCss,copyHtml);
-exports.copy = copy;
 exports.clean = clean;
-exports.clean = clean;
-exports.deploy = gulp.series(clean,exports.package,ghPages);
