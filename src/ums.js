@@ -196,7 +196,7 @@ class MastSelector {
             <label for="year" class="ums-label">Year:</label>
             <select name="year" id="year" class="ums-select">
             </select>
-            <label for="profile" class="ums-label">Profile:</label>
+            <label for="profile" class="ums-label">Bend Curve:</label>
             <output name="profile" id="profile" class="ums-profile ums-unknown">Unknown</output>
           </form>
         `;
