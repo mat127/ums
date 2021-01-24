@@ -173,6 +173,20 @@ class MastSelector {
         this.model.yearSelect.onchange = onChange;
     }
 
+    static register(parentId) {
+        const builder = function() {
+            MastSelector.build(parentId);
+        };
+        if(window.addEventListener)  // W3C DOM
+            window.addEventListener("load", builder, false);
+        else if(window.attachEvent) { // IE DOM
+            window.attachEvent("onload", builder);
+        }
+        else { // No much to do
+          console.log("cannot register MastSelector: " + parentId);
+        }
+    }
+
     static build(parentId) {
         const form = MastSelector.buildForm(parentId);
         if(!form)
